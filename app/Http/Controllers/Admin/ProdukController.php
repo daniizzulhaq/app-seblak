@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -6,7 +7,6 @@ use App\Models\Produk;
 use App\Models\Kategori;
 use App\Models\LevelPedas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -36,7 +36,14 @@ class ProdukController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validatedData['gambar'] = $request->file('gambar')->store('produk', 'public');
+            $file = $request->file('gambar');
+
+            $namaFile = time() . '.' . $file->extension();
+
+            // simpan langsung ke public_html/storage/produk
+            $file->move(public_path('storage/produk'), $namaFile);
+
+            $validatedData['gambar'] = 'produk/' . $namaFile;
         }
 
         Produk::create($validatedData);
@@ -68,11 +75,18 @@ class ProdukController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
-            if ($produk->gambar) {
-                Storage::disk('public')->delete($produk->gambar);
+
+            // hapus gambar lama jika ada
+            if ($produk->gambar && file_exists(public_path('storage/' . $produk->gambar))) {
+                unlink(public_path('storage/' . $produk->gambar));
             }
-            $validatedData['gambar'] = $request->file('gambar')->store('produk', 'public');
+
+            $file = $request->file('gambar');
+            $namaFile = time() . '.' . $file->extension();
+
+            $file->move(public_path('storage/produk'), $namaFile);
+
+            $validatedData['gambar'] = 'produk/' . $namaFile;
         }
 
         $produk->update($validatedData);
@@ -85,8 +99,8 @@ class ProdukController extends Controller
     {
         $produk = Produk::findOrFail($id);
 
-        if ($produk->gambar) {
-            Storage::disk('public')->delete($produk->gambar);
+        if ($produk->gambar && file_exists(public_path('storage/' . $produk->gambar))) {
+            unlink(public_path('storage/' . $produk->gambar));
         }
 
         $produk->delete();
