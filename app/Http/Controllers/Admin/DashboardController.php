@@ -32,11 +32,12 @@ class DashboardController extends Controller
             ->get();
 
         // Produk dengan Stok Rendah (≤ 5)
-        $lowStockProducts = Produk::with('daerah')
-            ->where('stok', '<=', 5)
-            ->orderBy('stok', 'asc')
-            ->take(10)
-            ->get();
+       // Produk dengan Stok Rendah (≤ 5)
+$lowStockProducts = Produk::with('levelPedas')
+    ->where('stok', '<=', 5)
+    ->orderBy('stok', 'asc')
+    ->take(10)
+    ->get();
 
         return view('admin.dashboard', compact(
             'totalProducts',
