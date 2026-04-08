@@ -2,8 +2,8 @@
 // routes/web.php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\AlatMusikController as AdminAlatMusikController;
-use App\Http\Controllers\Admin\DaerahController;
+use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
+use App\Http\Controllers\Admin\LevelPedasController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\CatalogController;
@@ -19,39 +19,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $featuredProducts = \App\Models\AlatMusik::with(['daerah', 'kategori'])
+    $featuredProducts = \App\Models\Produk::with(['kategori', 'levelPedas'])
         ->latest()
         ->take(6)
         ->get();
-    
+
     return view('home', compact('featuredProducts'));
 })->name('home');
 
 // Catalog Routes (Public)
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/catalog/{alatMusik}', [CatalogController::class, 'show'])->name('catalog.show');
+Route::get('/catalog/{produk}', [CatalogController::class, 'show'])->name('catalog.show');
 
 /*
 |--------------------------------------------------------------------------
-| Authentication Routes (Laravel Breeze/Fortify)
+| Authentication Routes
 |--------------------------------------------------------------------------
 */
 
-// Jika menggunakan Laravel Breeze, uncomment baris ini:
-// require __DIR__.'/auth.php';
-
-// Atau jika manual, gunakan ini:
 Route::middleware('guest')->group(function () {
-    Route::get('/login', function () {
-        return view('auth.login');
-    })->name('login');
-    
+    Route::get('/login', fn() => view('auth.login'))->name('login');
     Route::post('/login', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store']);
-    
-    Route::get('/register', function () {
-        return view('auth.register');
-    })->name('register');
-    
+
+    Route::get('/register', fn() => view('auth.register'))->name('register');
     Route::post('/register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store']);
 });
 
@@ -67,11 +57,11 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'customer'])->group(function () {
-    
+
     // Cart Routes
     Route::prefix('cart')->name('cart.')->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::post('/add/{alatMusik}', [CartController::class, 'add'])->name('add');
+        Route::post('/add/{produk}', [CartController::class, 'add'])->name('add');
         Route::put('/{cart}', [CartController::class, 'update'])->name('update');
         Route::delete('/{cart}', [CartController::class, 'destroy'])->name('destroy');
     });
@@ -83,28 +73,27 @@ Route::middleware(['auth', 'customer'])->group(function () {
         Route::get('/payment/{transaction}', [CheckoutController::class, 'payment'])->name('payment');
     });
 
-    // Payment Routes (Upload Bukti Transfer)
+    // Payment Upload Bukti Transfer
     Route::post('/payment/{transaction}/upload', [CheckoutController::class, 'uploadPaymentProof'])
         ->name('payment.upload');
 
     // Transaction Routes (Customer)
     Route::prefix('transactions')->name('transactions.')->group(function () {
         Route::get('/', function () {
-            $transactions = \App\Models\Transaction::with(['transactionDetails.alatMusik'])
+            $transactions = \App\Models\Transaction::with(['transactionDetails.produk'])
                 ->where('user_id', auth()->id())
                 ->latest()
                 ->paginate(10);
-            
+
             return view('transactions.index', compact('transactions'));
         })->name('index');
-        
+
         Route::get('/{transaction}', function (\App\Models\Transaction $transaction) {
-            // Check ownership
             if ($transaction->user_id !== auth()->id()) {
                 abort(403);
             }
-            
-            $transaction->load(['transactionDetails.alatMusik.daerah', 'user']);
+
+            $transaction->load(['transactionDetails.produk.kategori', 'user']);
             return view('transactions.show', compact('transaction'));
         })->name('show');
     });
@@ -121,16 +110,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Daerah Management
-    Route::resource('daerah', DaerahController::class);
+    // Level Pedas Management (pengganti Daerah)
+    Route::resource('level-pedas', LevelPedasController::class)->parameters([
+        'level-pedas' => 'levelPedas'
+    ]);
 
     // Kategori Management
     Route::resource('kategori', KategoriController::class);
 
-    // Alat Musik Management
-    Route::resource('alat-musik', AdminAlatMusikController::class)->parameters([
-        'alat-musik' => 'alatMusik'
-    ]);
+    // Produk Management (pengganti Alat Musik)
+    Route::resource('produk', AdminProdukController::class);
 
     // Transaction Management
     Route::prefix('transactions')->name('transactions.')->group(function () {
@@ -139,7 +128,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{transaction}/status', [AdminTransactionController::class, 'updateStatus'])->name('updateStatus');
     });
 
-    // ✅ Payment Methods Management
+    // Payment Methods Management
     Route::resource('payment-methods', \App\Http\Controllers\Admin\PaymentMethodController::class);
 });
 
@@ -164,53 +153,57 @@ Route::middleware('auth')->group(function () {
 PUBLIC ROUTES:
 - GET  /                          → home
 - GET  /catalog                   → catalog.index
-- GET  /catalog/{alatMusik}       → catalog.show
+- GET  /catalog/{produk}          → catalog.show
 - GET  /login                     → login
 - POST /login                     → (auth)
 - GET  /register                  → register
 - POST /register                  → (auth)
 
 CUSTOMER ROUTES (auth + customer middleware):
-- GET    /cart                    → cart.index
-- POST   /cart/add/{alatMusik}    → cart.add
-- PUT    /cart/{cart}             → cart.update
-- DELETE /cart/{cart}             → cart.destroy
-- GET    /checkout                → checkout.index
-- POST   /checkout                → checkout.store
-- GET    /transactions            → transactions.index
-- GET    /transactions/{id}       → transactions.show
+- GET    /cart                          → cart.index
+- POST   /cart/add/{produk}             → cart.add
+- PUT    /cart/{cart}                   → cart.update
+- DELETE /cart/{cart}                   → cart.destroy
+- GET    /checkout                      → checkout.index
+- POST   /checkout                      → checkout.store
+- GET    /checkout/payment/{transaction}→ checkout.payment
+- POST   /payment/{transaction}/upload  → payment.upload
+- GET    /transactions                  → transactions.index
+- GET    /transactions/{transaction}    → transactions.show
 
 ADMIN ROUTES (auth + admin middleware):
-- GET    /admin/dashboard         → admin.dashboard
+- GET    /admin/dashboard               → admin.dashboard
 
-- GET    /admin/daerah            → admin.daerah.index
-- GET    /admin/daerah/create     → admin.daerah.create
-- POST   /admin/daerah            → admin.daerah.store
-- GET    /admin/daerah/{id}/edit  → admin.daerah.edit
-- PUT    /admin/daerah/{id}       → admin.daerah.update
-- DELETE /admin/daerah/{id}       → admin.daerah.destroy
+- GET    /admin/level-pedas             → admin.level-pedas.index
+- GET    /admin/level-pedas/create      → admin.level-pedas.create
+- POST   /admin/level-pedas             → admin.level-pedas.store
+- GET    /admin/level-pedas/{id}/edit   → admin.level-pedas.edit
+- PUT    /admin/level-pedas/{id}        → admin.level-pedas.update
+- DELETE /admin/level-pedas/{id}        → admin.level-pedas.destroy
 
-- GET    /admin/kategori          → admin.kategori.index
-- GET    /admin/kategori/create   → admin.kategori.create
-- POST   /admin/kategori          → admin.kategori.store
-- GET    /admin/kategori/{id}/edit→ admin.kategori.edit
-- PUT    /admin/kategori/{id}     → admin.kategori.update
-- DELETE /admin/kategori/{id}     → admin.kategori.destroy
+- GET    /admin/kategori                → admin.kategori.index
+- GET    /admin/kategori/create         → admin.kategori.create
+- POST   /admin/kategori                → admin.kategori.store
+- GET    /admin/kategori/{id}/edit      → admin.kategori.edit
+- PUT    /admin/kategori/{id}           → admin.kategori.update
+- DELETE /admin/kategori/{id}           → admin.kategori.destroy
 
-- GET    /admin/alat-musik        → admin.alat-musik.index
-- GET    /admin/alat-musik/create → admin.alat-musik.create
-- POST   /admin/alat-musik        → admin.alat-musik.store
-- GET    /admin/alat-musik/{id}/edit → admin.alat-musik.edit
-- PUT    /admin/alat-musik/{id}   → admin.alat-musik.update
-- DELETE /admin/alat-musik/{id}   → admin.alat-musik.destroy
+- GET    /admin/produk                  → admin.produk.index
+- GET    /admin/produk/create           → admin.produk.create
+- POST   /admin/produk                  → admin.produk.store
+- GET    /admin/produk/{produk}/edit    → admin.produk.edit
+- PUT    /admin/produk/{produk}         → admin.produk.update
+- DELETE /admin/produk/{produk}         → admin.produk.destroy
 
-- GET    /admin/transactions      → admin.transactions.index
-- GET    /admin/transactions/{id} → admin.transactions.show
-- PUT    /admin/transactions/{id}/status → admin.transactions.updateStatus
+- GET    /admin/transactions            → admin.transactions.index
+- GET    /admin/transactions/{id}       → admin.transactions.show
+- PUT    /admin/transactions/{id}/status→ admin.transactions.updateStatus
+
+- GET/POST/PUT/DELETE /admin/payment-methods → admin.payment-methods.*
 
 AUTH ROUTES (all authenticated users):
-- POST   /logout                  → logout
-- GET    /profile                 → profile.edit
-- PATCH  /profile                 → profile.update
-- DELETE /profile                 → profile.destroy
+- POST   /logout                        → logout
+- GET    /profile                       → profile.edit
+- PATCH  /profile                       → profile.update
+- DELETE /profile                       → profile.destroy
 */

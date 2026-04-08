@@ -2,22 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Kategori;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class KategoriSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        $kategoris = [
-            ['nama_kategori' => 'Alat Musik Petik', 'deskripsi' => 'Alat musik yang dimainkan dengan cara dipetik'],
-            ['nama_kategori' => 'Alat Musik Pukul', 'deskripsi' => 'Alat musik yang dimainkan dengan cara dipukul'],
-            ['nama_kategori' => 'Alat Musik Tiup', 'deskripsi' => 'Alat musik yang dimainkan dengan cara ditiup'],
-            ['nama_kategori' => 'Alat Musik Gesek', 'deskripsi' => 'Alat musik yang dimainkan dengan cara digesek'],
-        ];
-
-        foreach ($kategoris as $kategori) {
-            Kategori::create($kategori);
-        }
+        DB::table('kategoris')->insert([
+            ['nama_kategori' => 'Makanan', 'deskripsi' => 'Kategori makanan ringan dan berat', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Minuman', 'deskripsi' => 'Kategori minuman segar dan hangat', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Snack', 'deskripsi' => 'Kategori cemilan dan snack', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }

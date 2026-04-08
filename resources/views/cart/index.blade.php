@@ -27,8 +27,8 @@
                         <div class="flex gap-6">
                             {{-- Product Image --}}
                             <div class="relative group flex-shrink-0">
-                                <img src="{{ $cart->alatMusik->gambar ? asset('storage/' . $cart->alatMusik->gambar) : 'https://via.placeholder.com/150' }}" 
-                                     alt="{{ $cart->alatMusik->nama_alat }}" 
+                                <img src="{{ $cart->produk->gambar ? asset('storage/' . $cart->produk->gambar) : 'https://via.placeholder.com/150' }}" 
+                                     alt="{{ $cart->produk->nama_alat }}" 
                                      class="w-32 h-32 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300">
                                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 rounded-xl transition-all duration-300"></div>
                             </div>
@@ -38,11 +38,11 @@
                                 <div class="flex items-start justify-between mb-3">
                                     <div class="flex-1 min-w-0">
                                         <h3 class="text-xl font-bold text-gray-900 mb-2 hover:text-indigo-600 transition-colors truncate">
-                                            {{ $cart->alatMusik->nama_alat }}
+                                            {{ $cart->produk->nama_alat }}
                                         </h3>
                                         <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
                                             <i class="fas fa-map-marker-alt text-blue-500"></i>
-                                            <span>{{ $cart->alatMusik->daerah->nama_daerah }}</span>
+                                            <span>{{ $cart->produk->levelPedas->nama_level ?? '-' }}</span>
                                         </div>
                                     </div>
                                     
@@ -60,7 +60,7 @@
                                 <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-3 rounded-xl mb-4">
                                     <p class="text-xs text-gray-600 mb-1">Harga per item</p>
                                     <p class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                        Rp {{ number_format($cart->alatMusik->harga, 0, ',', '.') }}
+                                        Rp {{ number_format($cart->produk->harga, 0, ',', '.') }}
                                     </p>
                                 </div>
 
@@ -77,7 +77,7 @@
                                                     <i class="fas fa-minus text-gray-600 text-sm"></i>
                                                 </button>
                                                 <input type="number" name="quantity" value="{{ $cart->quantity }}" 
-                                                    min="1" max="{{ $cart->alatMusik->stok }}" 
+                                                    min="1" max="{{ $cart->produk->stok }}" 
                                                     class="w-16 text-center py-2 border-0 focus:outline-none focus:ring-0 font-semibold text-gray-900"
                                                     onchange="this.form.submit()">
                                                 <button type="button" onclick="this.previousElementSibling.stepUp(); this.form.submit();" 
@@ -90,7 +90,7 @@
 
                                     <div class="text-xs text-gray-500">
                                         <i class="fas fa-box mr-1"></i>
-                                        Stok: {{ $cart->alatMusik->stok }}
+                                        Stok: {{ $cart->produk->stok }}
                                     </div>
                                 </div>
                             </div>

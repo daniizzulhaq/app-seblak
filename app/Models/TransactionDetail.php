@@ -11,7 +11,7 @@ class TransactionDetail extends Model
 
     protected $fillable = [
         'transaction_id',
-        'alat_musik_id',
+        'produk_id',    // Sesuai kolom database
         'quantity',
         'price',
         'subtotal',
@@ -29,9 +29,9 @@ class TransactionDetail extends Model
         return $this->belongsTo(Transaction::class);
     }
 
-    public function alatMusik()
+    public function produk()
     {
-        return $this->belongsTo(AlatMusik::class);
+        return $this->belongsTo(Produk::class); // ganti dari alatMusik
     }
 
     // Boot method untuk calculate subtotal otomatis

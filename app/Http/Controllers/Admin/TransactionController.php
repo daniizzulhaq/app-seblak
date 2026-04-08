@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Transaction::with(['user', 'transactionDetails.alatMusik']);
+        $query = Transaction::with(['user', 'transactionDetails.produk']);
 
         if ($request->has('status') && $request->status != '') {
             $query->where('status', $request->status);
@@ -23,7 +24,7 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        $transaction->load(['user', 'transactionDetails.alatMusik']);
+        $transaction->load(['user', 'transactionDetails.produk']);
 
         return view('admin.transactions.show', compact('transaction'));
     }
@@ -40,7 +41,6 @@ class TransactionController extends Controller
             ->with('success', 'Status transaksi berhasil diupdate');
     }
 
-    // Method baru untuk konfirmasi pembayaran
     public function confirmPayment(Transaction $transaction)
     {
         $transaction->update([
@@ -58,7 +58,6 @@ class TransactionController extends Controller
             'rejection_note' => 'required|string',
         ]);
 
-        // Hapus bukti transfer
         if ($transaction->payment_proof) {
             Storage::disk('public')->delete($transaction->payment_proof);
         }

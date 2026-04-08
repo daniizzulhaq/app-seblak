@@ -177,40 +177,49 @@
                 
                 <div class="p-6">
                     <div class="space-y-4">
-                        @foreach($transaction->transactionDetails as $detail)
-                        <div class="flex gap-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
-                            <div class="relative">
-                                <img src="{{ $detail->alatMusik->gambar ? asset('storage/' . $detail->alatMusik->gambar) : 'https://via.placeholder.com/80' }}" 
-                                     alt="{{ $detail->alatMusik->nama_alat }}" 
-                                     class="w-24 h-24 object-cover rounded-lg shadow-md">
-                                <div class="absolute -top-2 -right-2 bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg">
-                                    {{ $detail->quantity }}
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-gray-900 text-lg mb-1">{{ $detail->alatMusik->nama_alat }}</h4>
-                                <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                                    <i class="fas fa-map-marker-alt text-indigo-500"></i>
-                                    <span>{{ $detail->alatMusik->daerah->nama_daerah }}</span>
-                                </div>
-                                <div class="flex items-center gap-3 text-sm">
-                                    <span class="bg-white px-3 py-1 rounded-lg font-medium text-gray-700 border border-gray-300">
-                                        Qty: {{ $detail->quantity }}
-                                    </span>
-                                    <span class="text-gray-600">×</span>
-                                    <span class="bg-indigo-100 px-3 py-1 rounded-lg font-bold text-indigo-700">
-                                        Rp {{ number_format($detail->price, 0, ',', '.') }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="text-right flex flex-col justify-center">
-                                <p class="text-sm text-gray-600 mb-1">Subtotal</p>
-                                <p class="text-xl font-bold text-indigo-600">
-                                    Rp {{ number_format($detail->quantity * $detail->price, 0, ',', '.') }}
-                                </p>
-                            </div>
-                        </div>
-                        @endforeach
+                       @foreach($transaction->transactionDetails as $detail)
+<div class="flex gap-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
+    <div class="relative">
+        <img src="{{ optional($detail->produk)->gambar ? asset('storage/' . $detail->produk->gambar) : 'https://via.placeholder.com/80' }}" 
+             alt="{{ optional($detail->produk)->nama_produk }}" 
+             class="w-24 h-24 object-cover rounded-lg shadow-md">
+
+        <div class="absolute -top-2 -right-2 bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg">
+            {{ $detail->quantity }}
+        </div>
+    </div>
+
+    <div class="flex-1">
+        <h4 class="font-bold text-gray-900 text-lg mb-1">
+            {{ optional($detail->produk)->nama_produk ?? 'Produk tidak ditemukan' }}
+        </h4>
+
+        <div class="flex items-center gap-2 text-sm text-gray-600 mb-2">
+            <i class="fas fa-fire text-red-500"></i>
+            <span>
+                {{ optional(optional($detail->produk)->levelPedas)->nama_level ?? '-' }}
+            </span>
+        </div>
+
+        <div class="flex items-center gap-3 text-sm">
+            <span class="bg-white px-3 py-1 rounded-lg font-medium text-gray-700 border border-gray-300">
+                Qty: {{ $detail->quantity }}
+            </span>
+            <span class="text-gray-600">×</span>
+            <span class="bg-indigo-100 px-3 py-1 rounded-lg font-bold text-indigo-700">
+                Rp {{ number_format($detail->price, 0, ',', '.') }}
+            </span>
+        </div>
+    </div>
+
+    <div class="text-right flex flex-col justify-center">
+        <p class="text-sm text-gray-600 mb-1">Subtotal</p>
+        <p class="text-xl font-bold text-indigo-600">
+            Rp {{ number_format($detail->quantity * $detail->price, 0, ',', '.') }}
+        </p>
+    </div>
+</div>
+@endforeach
                     </div>
 
                     {{-- Total Summary --}}

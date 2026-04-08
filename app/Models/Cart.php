@@ -8,9 +8,10 @@ class Cart extends Model
 {
     use HasFactory;
 
+    // Fillable harus sesuai kolom di database
     protected $fillable = [
         'user_id',
-        'alat_musik_id',
+        'produk_id', // ganti dari alat_musik_id
         'quantity',
     ];
 
@@ -24,14 +25,14 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function alatMusik()
+    public function produk() // ganti dari alatMusik()
     {
-        return $this->belongsTo(AlatMusik::class);
+        return $this->belongsTo(Produk::class);
     }
 
     // Helper methods
     public function getSubtotal()
     {
-        return $this->quantity * $this->alatMusik->harga;
+        return $this->quantity * $this->produk->harga; // ganti dari alatMusik
     }
 }

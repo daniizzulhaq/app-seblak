@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AlatMusik;
+use App\Models\Produk;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         // Total Produk
-        $totalProducts = AlatMusik::count();
+        $totalProducts = Produk::count();
 
         // Total Transaksi
         $totalTransactions = Transaction::count();
@@ -32,7 +32,7 @@ class DashboardController extends Controller
             ->get();
 
         // Produk dengan Stok Rendah (≤ 5)
-        $lowStockProducts = AlatMusik::with('daerah')
+        $lowStockProducts = Produk::with('daerah')
             ->where('stok', '<=', 5)
             ->orderBy('stok', 'asc')
             ->take(10)

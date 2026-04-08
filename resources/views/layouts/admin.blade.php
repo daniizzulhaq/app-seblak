@@ -18,14 +18,14 @@
     <a href="{{ route('admin.dashboard') }}" class="block py-2.5 px-4 hover:bg-gray-700">
         <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
     </a>
-    <a href="{{ route('admin.daerah.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
-        <i class="fas fa-map-marker-alt mr-3"></i> Daerah
+    <a href="{{ route('admin.level-pedas.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
+        <i class="fas fa-map-marker-alt mr-3"></i> Level Pedas
     </a>
     <a href="{{ route('admin.kategori.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
         <i class="fas fa-tags mr-3"></i> Kategori
     </a>
-    <a href="{{ route('admin.alat-musik.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
-        <i class="fas fa-guitar mr-3"></i> Alat Musik
+    <a href="{{ route('admin.produk.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
+        <i class="fas fa-guitar mr-3"></i> Produk
     </a>
     <a href="{{ route('admin.transactions.index') }}" class="block py-2.5 px-4 hover:bg-gray-700">
         <i class="fas fa-receipt mr-3"></i> Transaksi

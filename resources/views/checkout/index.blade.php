@@ -124,38 +124,38 @@
                     </div>
                     
                     <div class="space-y-4">
-                        @foreach($carts as $cart)
-                        <div class="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
-                            <div class="relative group flex-shrink-0">
-                                <img src="{{ $cart->alatMusik->gambar ? asset('storage/' . $cart->alatMusik->gambar) : 'https://via.placeholder.com/100' }}" 
-                                     alt="{{ $cart->alatMusik->nama_alat }}" 
-                                     class="w-24 h-24 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300">
-                                <div class="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                                    {{ $cart->quantity }}
-                                </div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h3 class="font-bold text-gray-900 mb-2 truncate">{{ $cart->alatMusik->nama_alat }}</h3>
-                                <div class="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                                    <span class="flex items-center">
-                                        <i class="fas fa-box mr-1"></i>
-                                        {{ $cart->quantity }}x
-                                    </span>
-                                    <span class="flex items-center">
-                                        <i class="fas fa-tag mr-1"></i>
-                                        Rp {{ number_format($cart->alatMusik->harga, 0, ',', '.') }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="text-right flex-shrink-0">
-                                <p class="text-xs text-gray-500 mb-1">Subtotal</p>
-                                <p class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                    Rp {{ number_format($cart->getSubtotal(), 0, ',', '.') }}
-                                </p>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
+    @foreach($carts as $cart)
+    <div class="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+        <div class="relative group flex-shrink-0">
+            <img src="{{ $cart->produk->gambar ? asset('storage/' . $cart->produk->gambar) : 'https://via.placeholder.com/100' }}" 
+                 alt="{{ $cart->produk->nama_alat }}" 
+                 class="w-24 h-24 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300">
+            <div class="absolute -top-2 -right-2 w-7 h-7 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
+                {{ $cart->quantity }}
+            </div>
+        </div>
+        <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-gray-900 mb-2 truncate">{{ $cart->produk->nama_alat }}</h3>
+            <div class="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                <span class="flex items-center">
+                    <i class="fas fa-box mr-1"></i>
+                    {{ $cart->quantity }}x
+                </span>
+                <span class="flex items-center">
+                    <i class="fas fa-tag mr-1"></i>
+                    Rp {{ number_format($cart->produk->harga, 0, ',', '.') }}
+                </span>
+            </div>
+        </div>
+        <div class="text-right flex-shrink-0">
+            <p class="text-xs text-gray-500 mb-1">Subtotal</p>
+            <p class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                Rp {{ number_format($cart->getSubtotal(), 0, ',', '.') }}
+            </p>
+        </div>
+    </div>
+    @endforeach
+</div>
                 </div>
             </div>
 

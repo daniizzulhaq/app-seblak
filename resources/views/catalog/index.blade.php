@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'Katalog Alat Musik')
+@section('title', 'Katalog Produk')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {{-- Header Section --}}
     <div class="text-center mb-12">
         <div class="inline-block mb-4">
-            <span class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-semibold px-4 py-2 rounded-full">
+            <span class="bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm font-semibold px-4 py-2 rounded-full">
                 <i class="fas fa-store mr-2"></i>Koleksi Lengkap
             </span>
         </div>
-        <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Katalog Alat Musik
+        <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-4">
+            Katalog Produk
         </h1>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Temukan berbagai pilihan alat musik tradisional Indonesia dengan kualitas terbaik
+            Temukan berbagai pilihan produk seblak dengan level pedas terbaik
         </p>
     </div>
 
@@ -29,20 +29,20 @@
                         <i class="fas fa-search text-gray-400"></i>
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}" 
-                        placeholder="Cari alat musik..." 
-                        class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300">
+                        placeholder="Cari produk..." 
+                        class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300">
                 </div>
 
-                {{-- Filter Daerah --}}
+                {{-- Filter Level Pedas --}}
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <i class="fas fa-map-marker-alt text-gray-400"></i>
+                        <i class="fas fa-pepper-hot text-gray-400"></i>
                     </div>
-                    <select name="daerah_id" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
-                        <option value="">Semua Daerah</option>
-                        @foreach($daerahs as $daerah)
-                            <option value="{{ $daerah->id }}" {{ request('daerah_id') == $daerah->id ? 'selected' : '' }}>
-                                {{ $daerah->nama_daerah }}
+                    <select name="level_pedas_id" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
+                        <option value="">Semua Level Pedas</option>
+                        @foreach($levelPedas as $level)
+                            <option value="{{ $level->id }}" {{ request('level_pedas_id') == $level->id ? 'selected' : '' }}>
+                                {{ $level->nama_level }}
                             </option>
                         @endforeach
                     </select>
@@ -56,7 +56,7 @@
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <i class="fas fa-tag text-gray-400"></i>
                     </div>
-                    <select name="kategori_id" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
+                    <select name="kategori_id" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
                         <option value="">Semua Kategori</option>
                         @foreach($kategoris as $kategori)
                             <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
@@ -74,7 +74,7 @@
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <i class="fas fa-sort text-gray-400"></i>
                     </div>
-                    <select name="sort" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
+                    <select name="sort" class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 appearance-none bg-white">
                         <option value="">Urutkan</option>
                         <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Nama A-Z</option>
                         <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
@@ -87,7 +87,7 @@
             </div>
 
             <div class="flex gap-3">
-                <button type="submit" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center">
+                <button type="submit" class="bg-gradient-to-r from-red-600 to-orange-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center">
                     <i class="fas fa-search mr-2"></i> Cari Produk
                 </button>
                 <a href="{{ route('catalog.index') }}" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center">
@@ -98,26 +98,26 @@
     </div>
 
     {{-- Result Count --}}
-    @if($alatMusiks->count() > 0)
+    @if($produks->count() > 0)
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
-                <div class="w-2 h-8 bg-gradient-to-b from-indigo-600 to-purple-600 rounded-full"></div>
+                <div class="w-2 h-8 bg-gradient-to-b from-red-600 to-orange-600 rounded-full"></div>
                 <p class="text-gray-700 font-medium">
-                    Menampilkan <span class="font-bold text-indigo-600">{{ $alatMusiks->count() }}</span> dari 
-                    <span class="font-bold text-indigo-600">{{ $alatMusiks->total() }}</span> produk
+                    Menampilkan <span class="font-bold text-red-600">{{ $produks->count() }}</span> dari 
+                    <span class="font-bold text-red-600">{{ $produks->total() }}</span> produk
                 </p>
             </div>
         </div>
     @endif
 
     {{-- Products Grid --}}
-    @if($alatMusiks->count() > 0)
+    @if($produks->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            @foreach($alatMusiks as $product)
+            @foreach($produks as $product)
             <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
                 <div class="relative overflow-hidden">
                     <img src="{{ $product->gambar ? asset('storage/' . $product->gambar) : 'https://via.placeholder.com/400x300' }}" 
-                         alt="{{ $product->nama_alat }}" 
+                         alt="{{ $product->nama_produk }}" 
                          class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
                     
                     {{-- Stock Badge --}}
@@ -142,30 +142,32 @@
                 </div>
                 
                 <div class="p-5">
-                    <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors duration-300">
-                        {{ $product->nama_alat }}
+                    <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-red-600 transition-colors duration-300">
+                        {{ $product->nama_produk }}
                     </h3>
                     
                     <div class="space-y-2 mb-4">
+                        {{-- Level Pedas --}}
                         <div class="flex items-center text-sm text-gray-600">
-                            <div class="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                <i class="fas fa-map-marker-alt text-blue-600 text-xs"></i>
+                            <div class="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center mr-2">
+                                <i class="fas fa-pepper-hot text-red-600 text-xs"></i>
                             </div>
-                            <span class="truncate">{{ $product->daerah->nama_daerah }}</span>
+                            <span class="truncate">{{ $product->levelPedas->nama_level ?? '-' }}</span>
                         </div>
                         
+                        {{-- Kategori --}}
                         <div class="flex items-center text-sm text-gray-600">
                             <div class="w-5 h-5 bg-purple-100 rounded-full flex items-center justify-center mr-2">
                                 <i class="fas fa-tag text-purple-600 text-xs"></i>
                             </div>
-                            <span class="truncate">{{ $product->kategori->nama_kategori }}</span>
+                            <span class="truncate">{{ $product->kategori->nama_kategori ?? '-' }}</span>
                         </div>
                     </div>
                     
                     <div class="flex items-end justify-between mb-4">
                         <div>
                             <p class="text-xs text-gray-500 mb-1">Harga</p>
-                            <p class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                            <p class="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
                                 Rp {{ number_format($product->harga, 0, ',', '.') }}
                             </p>
                         </div>
@@ -179,7 +181,7 @@
                     
                     <div class="flex gap-2">
                         <a href="{{ route('catalog.show', $product) }}" 
-                           class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                           class="flex-1 bg-gradient-to-r from-red-600 to-orange-600 text-white text-center py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
                             <i class="fas fa-eye mr-2"></i>Detail
                         </a>
                         
@@ -200,7 +202,7 @@
                                 @endif
                             @endif
                         @else
-                            <a href="{{ route('login') }}" class="bg-gray-100 text-gray-700 px-4 py-3 rounded-xl hover:bg-indigo-100 hover:text-indigo-600 transition-all duration-300" title="Login untuk Membeli">
+                            <a href="{{ route('login') }}" class="bg-gray-100 text-gray-700 px-4 py-3 rounded-xl hover:bg-red-100 hover:text-red-600 transition-all duration-300" title="Login untuk Membeli">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         @endauth
@@ -212,7 +214,7 @@
 
         {{-- Pagination --}}
         <div class="mt-10">
-            {{ $alatMusiks->links() }}
+            {{ $produks->links() }}
         </div>
     @else
         <div class="text-center py-20 bg-white rounded-2xl shadow-lg">
@@ -221,7 +223,7 @@
             </div>
             <h3 class="text-2xl font-bold text-gray-900 mb-3">Produk Tidak Ditemukan</h3>
             <p class="text-gray-600 mb-6">Maaf, tidak ada produk yang sesuai dengan pencarian Anda.</p>
-            <a href="{{ route('catalog.index') }}" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            <a href="{{ route('catalog.index') }}" class="inline-block bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                 <i class="fas fa-redo mr-2"></i>Reset Pencarian
             </a>
         </div>

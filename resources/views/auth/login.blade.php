@@ -48,8 +48,7 @@
 
         <div class="mt-8 p-4 bg-gray-100 rounded">
             <p class="text-sm font-semibold text-gray-700 mb-2">Demo Accounts:</p>
-            <p class="text-sm text-gray-600">Admin: admin@alatmusik.com / admin123</p>
-            <p class="text-sm text-gray-600">Customer: budi@gmail.com / customer123</p>
+          
         </div>
     </div>
 </div>

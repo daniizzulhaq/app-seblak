@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaction_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
-            $table->foreignId('alat_musik_id')->constrained('alat_musiks')->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('price', 12, 2);
-            $table->decimal('subtotal', 12, 2);
-            $table->timestamps();
-        });
+    $table->id();
+    $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
+    $table->foreignId('produk_id')->constrained('produk')->onDelete('cascade');  // ubah dari alat_musik_id ke produk_id
+    $table->integer('quantity');
+    $table->decimal('price', 12, 2);
+    $table->decimal('subtotal', 12, 2);
+    $table->timestamps();
+});
     }
 
     public function down(): void

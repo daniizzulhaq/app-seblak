@@ -1,0 +1,285 @@
+<?php $__env->startSection('title', $produk->nama_produk); ?>
+
+<?php $__env->startSection('content'); ?>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <nav class="flex items-center gap-2 text-sm text-gray-600 mb-8">
+        <a href="<?php echo e(route('home')); ?>" class="hover:text-red-600 transition-colors">
+            <i class="fas fa-home"></i>
+        </a>
+        <i class="fas fa-chevron-right text-xs"></i>
+        <a href="<?php echo e(route('catalog.index')); ?>" class="hover:text-red-600 transition-colors">Katalog</a>
+        <i class="fas fa-chevron-right text-xs"></i>
+        <span class="text-red-600 font-medium"><?php echo e($produk->nama_produk); ?></span>
+    </nav>
+
+    
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-12 border border-gray-100">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 lg:p-12">
+            
+            <div class="space-y-4">
+                <div class="relative group overflow-hidden rounded-2xl bg-gray-100">
+                    <img src="<?php echo e($produk->gambar ? asset('storage/' . $produk->gambar) : 'https://via.placeholder.com/600x400'); ?>" 
+                         alt="<?php echo e($produk->nama_produk); ?>" 
+                         class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-500">
+                    
+                    
+                    <div class="absolute top-6 left-6">
+                        <?php if($produk->stok > 0): ?>
+                            <span class="bg-green-500 text-white text-sm font-bold px-4 py-2 rounded-full shadow-xl flex items-center">
+                                <i class="fas fa-check-circle mr-2"></i>Tersedia
+                            </span>
+                        <?php else: ?>
+                            <span class="bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-full shadow-xl flex items-center">
+                                <i class="fas fa-times-circle mr-2"></i>Stok Habis
+                            </span>
+                        <?php endif; ?>
+                    </div>
+
+                    
+                    <button class="absolute top-6 right-6 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 hover:bg-white transition-all duration-300 shadow-lg hover:scale-110">
+                        <i class="far fa-heart text-xl"></i>
+                    </button>
+                </div>
+
+                
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl text-center">
+                        <i class="fas fa-shield-alt text-2xl text-blue-600 mb-2"></i>
+                        <p class="text-xs font-semibold text-gray-700">Dijamin Halal</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl text-center">
+                        <i class="fas fa-truck text-2xl text-green-600 mb-2"></i>
+                        <p class="text-xs font-semibold text-gray-700">Gratis Ongkir</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl text-center">
+                        <i class="fas fa-pepper-hot text-2xl text-red-600 mb-2"></i>
+                        <p class="text-xs font-semibold text-gray-700">Pedas Terjamin</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="space-y-6">
+                
+                <div>
+                    <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4"><?php echo e($produk->nama_produk); ?></h1>
+                    
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="flex items-center">
+                            <?php for($i = 1; $i <= 5; $i++): ?>
+                                <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="text-sm text-gray-600">(4.8/5.0)</span>
+                        <span class="text-sm text-gray-400">•</span>
+                        <span class="text-sm text-gray-600">127 reviews</span>
+                    </div>
+                </div>
+
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-pepper-hot text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Level Pedas</p>
+                                <p class="font-semibold text-gray-900"><?php echo e($produk->levelPedas->nama_level ?? '-'); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tag text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Kategori</p>
+                                <p class="font-semibold text-gray-900"><?php echo e($produk->kategori->nama_kategori ?? '-'); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="bg-gradient-to-r from-red-50 via-orange-50 to-yellow-50 p-6 rounded-2xl border-2 border-red-100">
+                    <p class="text-sm text-gray-600 mb-2">Harga Special</p>
+                    <div class="flex items-end gap-3">
+                        <span class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
+                            Rp <?php echo e(number_format($produk->harga, 0, ',', '.')); ?>
+
+                        </span>
+                        <span class="text-sm text-gray-500 line-through mb-2">
+                            Rp <?php echo e(number_format($produk->harga * 1.2, 0, ',', '.')); ?>
+
+                        </span>
+                    </div>
+                    <div class="mt-3 inline-block bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        <i class="fas fa-fire mr-1"></i>Hemat 20%
+                    </div>
+                </div>
+
+                
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-box text-2xl <?php echo e($produk->stok > 0 ? 'text-green-600' : 'text-red-600'); ?>"></i>
+                            <div>
+                                <p class="text-sm text-gray-600">Ketersediaan Stok</p>
+                                <p class="font-bold <?php echo e($produk->stok > 0 ? 'text-green-600' : 'text-red-600'); ?>">
+                                    <?php echo e($produk->stok > 0 ? $produk->stok . ' unit tersedia' : 'Stok habis'); ?>
+
+                                </p>
+                            </div>
+                        </div>
+                        <?php if($produk->stok > 0 && $produk->stok <= 5): ?>
+                            <span class="text-xs bg-orange-100 text-orange-600 px-3 py-1 rounded-full font-semibold">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>Stok Terbatas
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3 flex items-center">
+                        <i class="fas fa-align-left mr-2 text-red-600"></i>
+                        Deskripsi Produk
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed"><?php echo e($produk->deskripsi); ?></p>
+                </div>
+
+                
+                <?php if(auth()->guard()->check()): ?>
+                    <?php if(auth()->user()->isCustomer()): ?>
+                        <?php if($produk->stok > 0): ?>
+                            <form action="<?php echo e(route('cart.add', $produk)); ?>" method="POST" class="space-y-4">
+                                <?php echo csrf_field(); ?>
+                                <div class="flex items-center gap-4">
+                                    <div class="flex-shrink-0">
+                                        <label class="block text-sm font-semibold text-gray-700 mb-2">Jumlah</label>
+                                        <div class="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden">
+                                            <button type="button" onclick="decreaseQty()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors">
+                                                <i class="fas fa-minus text-gray-600"></i>
+                                            </button>
+                                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="<?php echo e($produk->stok); ?>" 
+                                                class="w-20 text-center py-3 border-0 focus:outline-none focus:ring-0 font-semibold text-gray-900">
+                                            <button type="button" onclick="increaseQty()" class="px-4 py-3 bg-gray-100 hover:bg-gray-200 transition-colors">
+                                                <i class="fas fa-plus text-gray-600"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button type="submit" class="flex-1 bg-gradient-to-r from-red-600 to-orange-600 text-white py-4 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-bold text-lg flex items-center justify-center">
+                                        <i class="fas fa-shopping-cart mr-3"></i>
+                                        Tambah ke Keranjang
+                                    </button>
+                                    <button type="button" class="w-14 h-14 bg-gray-100 text-gray-700 rounded-xl hover:bg-red-100 hover:text-red-600 transition-all duration-300 flex items-center justify-center">
+                                        <i class="far fa-heart text-xl"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        <?php else: ?>
+                            <button disabled class="w-full bg-gray-300 text-gray-500 py-4 rounded-xl cursor-not-allowed font-bold text-lg flex items-center justify-center">
+                                <i class="fas fa-ban mr-3"></i>
+                                Stok Habis
+                            </button>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <a href="<?php echo e(route('login')); ?>" class="block w-full text-center bg-gradient-to-r from-red-600 to-orange-600 text-white py-4 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 font-bold text-lg">
+                        <i class="fas fa-sign-in-alt mr-3"></i>
+                        Login untuk Membeli
+                    </a>
+                <?php endif; ?>
+
+                
+                <div class="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-info-circle text-orange-600 text-xl mt-1"></i>
+                        <div class="text-sm text-orange-800">
+                            <p class="font-semibold mb-1">Informasi Penting:</p>
+                            <ul class="space-y-1 text-orange-700">
+                                <li>• Produk dibuat fresh setiap hari</li>
+                                <li>• Bisa dikirim ke seluruh Indonesia</li>
+                                <li>• Kemasan aman dan rapi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <?php if($relatedProducts->count() > 0): ?>
+    <div class="mb-12">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Produk Terkait</h2>
+                <p class="text-gray-600">Anda mungkin juga tertarik dengan produk ini</p>
+            </div>
+            <a href="<?php echo e(route('catalog.index')); ?>" class="text-red-600 hover:text-red-700 font-semibold flex items-center gap-2">
+                Lihat Semua <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <?php $__currentLoopData = $relatedProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+                <div class="relative overflow-hidden">
+                    <img src="<?php echo e($product->gambar ? asset('storage/' . $product->gambar) : 'https://via.placeholder.com/300x200'); ?>" 
+                         alt="<?php echo e($product->nama_produk); ?>" 
+                         class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <button class="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition-all duration-300 opacity-0 group-hover:opacity-100">
+                        <i class="far fa-heart text-sm"></i>
+                    </button>
+                </div>
+
+                <div class="p-4">
+                    <h3 class="text-base font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
+                        <?php echo e($product->nama_produk); ?>
+
+                    </h3>
+                    <p class="text-xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-4">
+                        Rp <?php echo e(number_format($product->harga, 0, ',', '.')); ?>
+
+                    </p>
+                    <a href="<?php echo e(route('catalog.show', $product)); ?>" class="block text-center bg-gradient-to-r from-red-600 to-orange-600 text-white py-2.5 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-semibold">
+                        <i class="fas fa-eye mr-2"></i>Lihat Detail
+                    </a>
+                </div>
+            </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+
+<script>
+    function increaseQty() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) < parseInt(input.max)) input.value++;
+    }
+    function decreaseQty() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > parseInt(input.min)) input.value--;
+    }
+</script>
+
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\windows\Documents\joki skripsi\joki laporan\web\e-coomerce-seblak\resources\views/catalog/show.blade.php ENDPATH**/ ?>

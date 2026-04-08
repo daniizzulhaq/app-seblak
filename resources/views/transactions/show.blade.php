@@ -218,22 +218,22 @@
                     @foreach($transaction->transactionDetails as $detail)
                     <div class="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
                         <div class="relative flex-shrink-0">
-                            <img src="{{ $detail->alatMusik->gambar ? asset('storage/' . $detail->alatMusik->gambar) : 'https://via.placeholder.com/100' }}" 
-                                 alt="{{ $detail->alatMusik->nama_alat }}" 
-                                 class="w-24 h-24 object-cover rounded-xl">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
-                                {{ $detail->quantity }}
-                            </div>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-gray-900 mb-2 truncate">{{ $detail->alatMusik->nama_alat }}</h4>
-                            <p class="text-sm text-gray-600 flex items-center gap-2 mb-1">
-                                <i class="fas fa-map-marker-alt text-blue-500"></i>
-                                {{ $detail->alatMusik->daerah->nama_daerah }}
-                            </p>
-                            <p class="text-sm text-gray-600">
-                                {{ $detail->quantity }} x Rp {{ number_format($detail->price, 0, ',', '.') }}
-                            </p>
+                            <img src="{{ $detail->produk && $detail->produk->gambar ? asset('storage/' . $detail->produk->gambar) : 'https://via.placeholder.com/100' }}" 
+     alt="{{ $detail->produk ? $detail->produk->nama : 'Produk' }}" 
+     class="w-24 h-24 object-cover rounded-xl">
+
+<h4 class="font-bold text-gray-900 mb-2 truncate">
+    {{ $detail->produk ? $detail->produk->nama : 'Produk' }}
+</h4>
+
+<p class="text-sm text-gray-600 flex items-center gap-2 mb-1">
+    <i class="fas fa-map-marker-alt text-blue-500"></i>
+    {{ $detail->produk && $detail->produk->daerah ? $detail->produk->daerah->nama_daerah : '-' }}
+</p>
+
+<p class="text-sm text-gray-600">
+    {{ $detail->quantity }} x Rp {{ number_format($detail->price, 0, ',', '.') }}
+</p>
                         </div>
                         <div class="text-right flex-shrink-0">
                             <p class="text-xs text-gray-500 mb-1">Subtotal</p>

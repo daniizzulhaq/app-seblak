@@ -3,31 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Toko Alat Musik Nusantara')</title>
+    <title>@yield('title', 'Seblak Mamakoo - Pedas Nikmat Nusantara')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Nunito', sans-serif;
+            background-color: #fff8f0;
         }
-        
+
+        /* ===== WARNA UTAMA MAMAKOO ===== */
+        /* Merah cabai: #D72638  |  Oranye hangat: #F46036  |  Kuning kunyit: #F4C430  |  Krem: #FFF3E4 */
+
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #D72638 0%, #F46036 100%);
         }
-        
+
         .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 248, 240, 0.97);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #F46036;
         }
-        
+
         .nav-link {
             position: relative;
             transition: all 0.3s ease;
+            font-weight: 700;
         }
-        
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -35,87 +40,95 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #D72638, #F46036);
             transition: width 0.3s ease;
         }
-        
+
         .nav-link:hover::after {
             width: 100%;
         }
-        
+
         .btn-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #D72638 0%, #F46036 100%);
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(215, 38, 56, 0.35);
         }
-        
+
         .btn-gradient:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 6px 20px rgba(215, 38, 56, 0.5);
         }
-        
+
         .dropdown-menu {
             animation: slideDown 0.3s ease;
         }
-        
+
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        
+
         .alert-slide {
             animation: slideInRight 0.5s ease;
         }
-        
+
         @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(100px); }
+            to   { opacity: 1; transform: translateX(0); }
         }
-        
+
         .cart-badge {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #F4C430 0%, #F46036 100%);
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.1); }
         }
-        
+
         .footer-wave {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            background: linear-gradient(135deg, #1a0a00 0%, #2d1200 100%);
         }
-        
+
         .icon-bounce:hover {
             animation: bounce 0.5s;
         }
-        
+
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-10px); }
+        }
+
+        /* Dekorasi cabai kecil di background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(244, 96, 54, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(215, 38, 56, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        main, nav, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Badge promo / label merah */
+        .badge-spicy {
+            background: #D72638;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            padding: 2px 8px;
+            border-radius: 999px;
         }
     </style>
     <script>
@@ -126,12 +139,12 @@
 
         window.addEventListener('click', function(e) {
             const dropdown = document.getElementById('userDropdown');
-            const button = document.getElementById('dropdownButton');
+            const button   = document.getElementById('dropdownButton');
             if (dropdown && button && !button.contains(e.target) && !dropdown.contains(e.target)) {
                 dropdown.classList.add('hidden');
             }
         });
-        
+
         // Auto hide alerts after 5 seconds
         setTimeout(() => {
             const alerts = document.querySelectorAll('.alert-auto-hide');
@@ -142,175 +155,241 @@
         }, 5000);
     </script>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
-    {{-- Navbar --}}
-    <nav class="glass-effect sticky top-0 z-50 shadow-xl">
+<body class="min-h-screen" style="background-color:#fff8f0;">
+
+    {{-- ===================== NAVBAR ===================== --}}
+    <nav class="glass-effect sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
+
+                {{-- Logo --}}
                 <div class="flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
-                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
-                            <i class="fas fa-music text-white text-xl"></i>
+                        <div class="w-12 h-12 gradient-bg rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300 shadow-md">
+                            {{-- Ikon mangkok seblak --}}
+                            <i class="fas fa-bowl-food text-white text-xl"></i>
                         </div>
-                        <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                            Alat Musik Nusantara
-                        </span>
+                        <div class="leading-tight">
+                            <span class="text-2xl font-black" style="font-family:'Pacifico',cursive; color:#D72638;">
+                                Mamakoo
+                            </span>
+                            <span class="block text-xs font-700 tracking-widest" style="color:#F46036; font-weight:800; letter-spacing:0.12em;">
+                                SEBLAK & JAJANAN PEDAS
+                            </span>
+                        </div>
                     </a>
                 </div>
 
-                <div class="flex items-center space-x-8">
-                    <a href="{{ route('catalog.index') }}" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">
-                        <i class="fas fa-th-large mr-2"></i>Katalog
+                {{-- Nav Links --}}
+                <div class="flex items-center space-x-6">
+                    <a href="{{ route('catalog.index') }}"
+                       class="nav-link font-bold"
+                       style="color:#2d1200;">
+                        <i class="fas fa-fire-flame-curved mr-1" style="color:#F46036;"></i>Menu Pedas
                     </a>
-                    
+
                     @auth
                         @if(auth()->user()->isCustomer())
-                            <a href="{{ route('cart.index') }}" class="nav-link text-gray-700 hover:text-indigo-600 font-medium relative">
-                                <i class="fas fa-shopping-cart text-lg icon-bounce"></i>
+                            <a href="{{ route('cart.index') }}"
+                               class="nav-link font-bold relative"
+                               style="color:#2d1200;">
+                                <i class="fas fa-shopping-basket text-lg icon-bounce" style="color:#F46036;"></i>
                                 @php
                                     $cartCount = auth()->user()->carts()->sum('quantity');
                                 @endphp
                                 @if($cartCount > 0)
-                                    <span class="cart-badge text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                                    <span class="cart-badge text-white text-xs font-black w-5 h-5 flex items-center justify-center rounded-full">
                                         {{ $cartCount > 99 ? '99+' : $cartCount }}
                                     </span>
                                 @endif
                             </a>
-                            <a href="{{ route('transactions.index') }}" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">
-                                <i class="fas fa-receipt mr-2"></i>Transaksi Saya
+                            <a href="{{ route('transactions.index') }}"
+                               class="nav-link font-bold"
+                               style="color:#2d1200;">
+                                <i class="fas fa-receipt mr-1" style="color:#F46036;"></i>Pesanan Saya
                             </a>
                         @endif
 
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">
-                                <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Admin
+                            <a href="{{ route('admin.dashboard') }}"
+                               class="nav-link font-bold"
+                               style="color:#2d1200;">
+                                <i class="fas fa-tachometer-alt mr-1" style="color:#F46036;"></i>Dashboard
                             </a>
                         @endif
 
+                        {{-- User Dropdown --}}
                         <div class="relative">
-                            <button id="dropdownButton" onclick="toggleDropdown()" type="button" class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 focus:outline-none group">
-                                <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center">
-                                    <i class="fas fa-user text-white"></i>
+                            <button id="dropdownButton" onclick="toggleDropdown()" type="button"
+                                    class="flex items-center space-x-2 focus:outline-none group"
+                                    style="color:#2d1200;">
+                                <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center shadow">
+                                    <i class="fas fa-user text-white text-sm"></i>
                                 </div>
-                                <span class="font-medium">{{ auth()->user()->name }}</span>
-                                <i class="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-300"></i>
+                                <span class="font-bold text-sm">{{ auth()->user()->name }}</span>
+                                <i class="fas fa-chevron-down text-xs group-hover:rotate-180 transition-transform duration-300" style="color:#F46036;"></i>
                             </button>
-                            <div id="userDropdown" class="hidden dropdown-menu absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl py-2 border border-gray-100">
-                                <div class="px-4 py-3 border-b border-gray-100">
-                                    <p class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</p>
-                                    <p class="text-xs text-gray-500 mt-1">{{ auth()->user()->email }}</p>
+
+                            <div id="userDropdown"
+                                 class="hidden dropdown-menu absolute right-0 mt-3 w-56 rounded-2xl shadow-2xl py-2 border"
+                                 style="background:#fff8f0; border-color:#F4C430;">
+                                <div class="px-4 py-3 border-b" style="border-color:#f0e0cc;">
+                                    <p class="text-sm font-bold" style="color:#2d1200;">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs mt-1" style="color:#F46036;">{{ auth()->user()->email }}</p>
                                 </div>
                                 <form method="POST" action="{{ route('logout') }}" class="mt-2">
                                     @csrf
-                                    <button type="submit" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50 transition-all duration-300 rounded-xl mx-2 flex items-center space-x-3">
-                                        <i class="fas fa-sign-out-alt text-indigo-600"></i>
-                                        <span class="font-medium">Logout</span>
+                                    <button type="submit"
+                                            class="w-full text-left px-4 py-3 transition-all duration-300 rounded-xl mx-0 flex items-center space-x-3 hover:bg-red-50"
+                                            style="color:#2d1200;">
+                                        <i class="fas fa-sign-out-alt" style="color:#D72638;"></i>
+                                        <span class="font-bold">Logout</span>
                                     </button>
                                 </form>
                             </div>
                         </div>
+
                     @else
-                        <a href="{{ route('login') }}" class="nav-link text-gray-700 hover:text-indigo-600 font-medium">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        <a href="{{ route('login') }}"
+                           class="nav-link font-bold"
+                           style="color:#2d1200;">
+                            <i class="fas fa-sign-in-alt mr-1" style="color:#F46036;"></i>Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="btn-gradient text-white px-6 py-3 rounded-xl font-medium">
-                            <i class="fas fa-user-plus mr-2"></i>Register
+                        <a href="{{ route('register') }}"
+                           class="btn-gradient text-white px-5 py-3 rounded-xl font-bold text-sm shadow">
+                            <i class="fas fa-user-plus mr-1"></i>Daftar
                         </a>
                     @endauth
                 </div>
+
             </div>
         </div>
     </nav>
 
-    {{-- Alert Messages --}}
+    {{-- ===================== ALERT SUKSES ===================== --}}
     @if(session('success'))
         <div class="fixed top-24 right-4 z-50 alert-slide alert-auto-hide">
-            <div class="bg-white rounded-2xl shadow-2xl px-6 py-4 flex items-center space-x-4 border-l-4 border-green-500 max-w-md">
+            <div class="rounded-2xl shadow-2xl px-6 py-4 flex items-center space-x-4 border-l-4 max-w-md"
+                 style="background:#fff8f0; border-color:#22c55e;">
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                     <i class="fas fa-check-circle text-green-600 text-xl"></i>
                 </div>
                 <div class="flex-1">
-                    <p class="text-sm font-semibold text-gray-900">Berhasil!</p>
-                    <p class="text-sm text-gray-600 mt-1">{{ session('success') }}</p>
+                    <p class="text-sm font-bold" style="color:#2d1200;">Mantap! 🔥</p>
+                    <p class="text-sm mt-1" style="color:#5a3a1a;">{{ session('success') }}</p>
                 </div>
-                <button onclick="this.parentElement.parentElement.remove()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="this.parentElement.parentElement.remove()"
+                        class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
     @endif
 
+    {{-- ===================== ALERT ERROR ===================== --}}
     @if(session('error'))
         <div class="fixed top-24 right-4 z-50 alert-slide alert-auto-hide">
-            <div class="bg-white rounded-2xl shadow-2xl px-6 py-4 flex items-center space-x-4 border-l-4 border-red-500 max-w-md">
+            <div class="rounded-2xl shadow-2xl px-6 py-4 flex items-center space-x-4 border-l-4 max-w-md"
+                 style="background:#fff8f0; border-color:#D72638;">
                 <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                     <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
                 </div>
                 <div class="flex-1">
-                    <p class="text-sm font-semibold text-gray-900">Oops!</p>
-                    <p class="text-sm text-gray-600 mt-1">{{ session('error') }}</p>
+                    <p class="text-sm font-bold" style="color:#2d1200;">Aduh!</p>
+                    <p class="text-sm mt-1" style="color:#5a3a1a;">{{ session('error') }}</p>
                 </div>
-                <button onclick="this.parentElement.parentElement.remove()" class="text-gray-400 hover:text-gray-600">
+                <button onclick="this.parentElement.parentElement.remove()"
+                        class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
     @endif
 
-    {{-- Content --}}
+    {{-- ===================== KONTEN UTAMA ===================== --}}
     <main class="py-12">
         @yield('content')
     </main>
 
-    {{-- Footer --}}
+    {{-- ===================== FOOTER ===================== --}}
     <footer class="footer-wave text-white py-12 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+
+                {{-- Brand --}}
                 <div>
                     <div class="flex items-center space-x-3 mb-4">
                         <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
-                            <i class="fas fa-music text-white"></i>
+                            <i class="fas fa-bowl-food text-white"></i>
                         </div>
-                        <h3 class="text-xl font-bold">Alat Musik Nusantara</h3>
+                        <h3 class="text-xl font-black" style="font-family:'Pacifico',cursive; color:#F4C430;">
+                            Mamakoo
+                        </h3>
                     </div>
-                    <p class="text-gray-400 text-sm">Toko alat musik terpercaya dengan koleksi instrumen tradisional dan modern berkualitas.</p>
+                    <p class="text-sm" style="color:#c9a07a;">
+                        Seblak & jajanan pedas khas Nusantara. Dibuat dengan cinta dan cabai pilihan Mamak.
+                    </p>
                 </div>
-                
+
+                {{-- Link Cepat --}}
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Link Cepat</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs"></i>Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs"></i>Katalog Produk</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs"></i>Cara Pemesanan</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs"></i>Kontak</a></li>
+                    <h4 class="text-base font-black mb-4 tracking-wide" style="color:#F4C430;">
+                        <i class="fas fa-pepper-hot mr-2" style="color:#F46036;"></i>Jelajahi
+                    </h4>
+                    <ul class="space-y-2 text-sm" style="color:#c9a07a;">
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs" style="color:#F46036;"></i>Tentang Mamakoo</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs" style="color:#F46036;"></i>Menu Seblak</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs" style="color:#F46036;"></i>Cara Pemesanan</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors"><i class="fas fa-chevron-right mr-2 text-xs" style="color:#F46036;"></i>Hubungi Kami</a></li>
                     </ul>
                 </div>
-                
+
+                {{-- Kontak --}}
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Hubungi Kami</h4>
-                    <ul class="space-y-3 text-gray-400 text-sm">
-                        <li class="flex items-center"><i class="fas fa-map-marker-alt mr-3 text-indigo-400"></i>Jakarta, Indonesia</li>
-                        <li class="flex items-center"><i class="fas fa-phone mr-3 text-indigo-400"></i>+62 123 456 789</li>
-                        <li class="flex items-center"><i class="fas fa-envelope mr-3 text-indigo-400"></i>info@alatmusik.com</li>
+                    <h4 class="text-base font-black mb-4 tracking-wide" style="color:#F4C430;">
+                        <i class="fas fa-location-dot mr-2" style="color:#F46036;"></i>Cari Kami
+                    </h4>
+                    <ul class="space-y-3 text-sm" style="color:#c9a07a;">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3" style="color:#F46036;"></i>Bandung, Jawa Barat
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3" style="color:#F46036;"></i>+62 812 3456 7890
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3" style="color:#F46036;"></i>mamakoo@seblak.id
+                        </li>
                     </ul>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 transition-all duration-300">
-                            <i class="fab fa-facebook-f"></i>
+                    <div class="flex space-x-3 mt-5">
+                        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                           style="background:rgba(244,96,54,0.2);">
+                            <i class="fab fa-facebook-f" style="color:#F46036;"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 transition-all duration-300">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                           style="background:rgba(244,96,54,0.2);">
+                            <i class="fab fa-instagram" style="color:#F46036;"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 transition-all duration-300">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                           style="background:rgba(244,96,54,0.2);">
+                            <i class="fab fa-tiktok" style="color:#F46036;"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+                           style="background:rgba(244,96,54,0.2);">
+                            <i class="fab fa-whatsapp" style="color:#F46036;"></i>
                         </a>
                     </div>
                 </div>
+
             </div>
-            
-            <div class="border-t border-gray-700 pt-8 text-center">
-                <p class="text-gray-400 text-sm">&copy; 2024 Toko Alat Musik Nusantara. All rights reserved.</p>
+
+            <div class="border-t pt-8 text-center" style="border-color:rgba(244,96,54,0.25);">
+                <p class="text-sm" style="color:#7a4a2a;">
+                    &copy; 2024 <span style="color:#F4C430; font-weight:800;">Seblak Mamakoo</span>. All rights reserved.
+                    &nbsp;|&nbsp; 🌶️ Dibuat dengan pedas &amp; cinta.
+                </p>
             </div>
         </div>
     </footer>
+
 </body>
 </html>
